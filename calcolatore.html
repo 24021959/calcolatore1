@@ -1,0 +1,131 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Calcolatore Marketing WhatsApp</title>
+    <style>
+        body {
+            font-family: Arial, sans-serif;
+            margin: 0;
+            padding: 0;
+            display: flex;
+            flex-direction: column;
+            align-items: center;
+            justify-content: center;
+            height: 100vh;
+            background-color: #f9f9f9;
+        }
+
+        .container {
+            width: 100%;
+            max-width: 500px;
+            background: #fff;
+            padding: 20px;
+            box-shadow: 0 0 10px rgba(0, 0, 0, 0.1);
+            border-radius: 10px;
+        }
+
+        .container h1 {
+            font-size: 24px;
+            text-align: center;
+            margin-bottom: 20px;
+        }
+
+        .form-group {
+            margin-bottom: 15px;
+        }
+
+        .form-group label {
+            display: block;
+            margin-bottom: 5px;
+            font-weight: bold;
+        }
+
+        .form-group input {
+            width: 100%;
+            padding: 10px;
+            border: 1px solid #ccc;
+            border-radius: 5px;
+            font-size: 16px;
+        }
+
+        .btn {
+            width: 100%;
+            padding: 10px;
+            background-color: #28a745;
+            color: #fff;
+            border: none;
+            border-radius: 5px;
+            font-size: 16px;
+            cursor: pointer;
+        }
+
+        .btn:hover {
+            background-color: #218838;
+        }
+
+        .results {
+            margin-top: 20px;
+            padding: 15px;
+            background-color: #e9ecef;
+            border-radius: 5px;
+        }
+
+        .results p {
+            margin: 0;
+            font-size: 16px;
+        }
+    </style>
+</head>
+<body>
+    <div class="container">
+        <h1>Calcolatore Marketing WhatsApp</h1>
+        <div class="form-group">
+            <label for="daily-customers">Clienti giornalieri</label>
+            <input type="number" id="daily-customers" placeholder="Inserisci il numero di clienti giornalieri">
+        </div>
+        <div class="form-group">
+            <label for="percentage-data">% Clienti che lasciano i dati</label>
+            <input type="number" id="percentage-data" placeholder="Inserisci la percentuale (es. 50)">
+        </div>
+        <div class="form-group">
+            <label for="avg-value">Valore medio per cliente (€)</label>
+            <input type="number" id="avg-value" placeholder="Inserisci il valore medio per cliente">
+        </div>
+        <div class="form-group">
+            <label for="conversion-rate">Tasso di conversione (%)</label>
+            <input type="number" id="conversion-rate" placeholder="Inserisci il tasso di conversione">
+        </div>
+        <button class="btn" onclick="calculateResults()">Calcola</button>
+
+        <div class="results" id="results" style="display: none;">
+            <p id="monthly-customers"></p>
+            <p id="converted-customers"></p>
+            <p id="total-revenue"></p>
+        </div>
+    </div>
+
+    <script>
+        function calculateResults() {
+            // Input values
+            const dailyCustomers = parseInt(document.getElementById('daily-customers').value) || 0;
+            const percentageData = parseFloat(document.getElementById('percentage-data').value) || 0;
+            const avgValue = parseFloat(document.getElementById('avg-value').value) || 0;
+            const conversionRate = parseFloat(document.getElementById('conversion-rate').value) || 0;
+
+            // Calculations
+            const monthlyCustomers = Math.round((dailyCustomers * (percentageData / 100)) * 26); // 26 giorni lavorativi
+            const convertedCustomers = Math.round(monthlyCustomers * (conversionRate / 100));
+            const totalRevenue = (convertedCustomers * avgValue).toFixed(2);
+
+            // Display results
+            document.getElementById('monthly-customers').textContent = `Clienti raccolti mensilmente: ${monthlyCustomers}`;
+            document.getElementById('converted-customers').textContent = `Clienti convertiti: ${convertedCustomers}`;
+            document.getElementById('total-revenue').textContent = `Ricavi totali stimati: €${totalRevenue}`;
+
+            document.getElementById('results').style.display = 'block';
+        }
+    </script>
+</body>
+</html>
